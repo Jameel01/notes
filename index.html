@@ -1,0 +1,166 @@
+# Jameel01.github.io
+个人博客
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<style>
+	ul{margin:0;padding:0}
+	a{text-decoration: none;}
+	li{list-style: none}
+	#divCustomers li{width: 300px;height: 400px; background:#fff;display: inline-block;margin: 20px;}
+	#divCustomers li img{width: 100%;height: 100%;}
+	#page{margin-left:300px;}
+	#page a{margin:5px;}
+	</style>
+<script type="text/javascript">
+	$(function(){
+		
+			$('#btn').click(jsonp);
+		    var start = 0;
+			function jsonp(){
+				var sch = $('#q').val();
+			 
+			if(sch != '')
+			{
+				
+			  $.ajax({
+						type : "get",
+						async:false,
+						url : 'https://api.douban.com/v2/movie/search?q='+sch+'&start='+start+'&count=5',
+						dataType : "jsonp",
+						jsonp: "callback",//服务端用于接收callback调用的function名的参数
+						jsonpCallback:"success_jsonpCallback",//callback的function名称
+						success : function(data)
+				  								{
+													$('#divCustomers').html('');
+													$('#total').html('搜索数量：'+data.total);
+													var html = '<ul>';
+													for(var i = 0; i < data.subjects.length; i++)
+													{
+														html += '<li>'+'<a href="'+data.subjects[i].alt+'">'+'<img src="'+data.subjects[i].images.small+'" alt="img">'+data.subjects[i].title+'</a>' +'</li>';
+													}
+													html += '</ul>';
+													$('#divCustomers').html(html); 
+													
+													start = data.start;
+													$('#page').html('');
+													page({
+																		id:'page',
+																		nowNum:start,
+																		allNum:Math.ceil(data.total/5),
+																		callBack : function(now,all){
+
+																				start =now;
+																				}
+																	});
+												},
+						error:function()
+				  				{
+									alert('fail');
+								}
+			  		});
+				
+				$(document).ajaxSuccess(function(){
+					console.log(start);
+				});
+			};
+			
+		};
+			
+	});
+  
+	function page(opt){
+
+		
+		if(!opt.id){return false};
+		var nowNum = opt.nowNum||1;
+		var allNum = opt.allNum||5;
+		var callBack = opt.callBack || function(){};
+		
+		if(nowNum>=4 && allNum>=6){
+
+			var str = '<a href="#1">'+"首页"+'</a>';
+			$('#page').append(str);
+		}
+
+		if(nowNum>=2){
+
+			var str = '<a href="'+"#"+(nowNum-1)+'">'+"上一页"+'</a>';
+			$('#page').append(str);
+		}
+
+		if(allNum<=5){
+			for(var i=1;i<=allNum;i++){
+				var str = '<a href="'+"#"+i+'">'+i+'</a>';
+				$('#page').append(str);
+			};
+		}
+		else{
+				for(var i=1;i<=5;i++){
+					if(nowNum==1||nowNum==2){
+
+						var str = '<a href="'+"#"+i+'">'+i+'</a>';
+					}
+					else if((allNum-nowNum)<=1){
+
+								var str = '<a href="'+"#"+(allNum-5+i)+'">'+(allNum-5+i)+'</a>';
+							}
+					else {
+
+						var str = '<a href="'+"#"+(nowNum-3+i)+'">'+(nowNum-3+i)+'</a>';
+ 					}
+
+					$('#page').append(str);
+
+				};
+			}
+
+		if((allNum - nowNum) >= 1){
+
+			var str = '<a href="'+"#"+(nowNum+1)+'">'+"下一页"+'</a>';
+			$('#page').append(str);
+		}
+
+		if((allNum - nowNum) >= 3 && allNum>=6){
+
+			var str = '<a href="'+"#"+allNum+'">'+"尾页"+'</a>';
+			$('#page').append(str);
+		}
+
+		callBack(nowNum,allNum);
+		
+		$('#page').find('a').click(function(){
+
+				var nowNum = parseInt(this.getAttribute('href').substring(1));
+				$('#page').html('');
+
+			page({
+
+				id : opt.id,
+				nowNum : nowNum,
+				allNum : allNum,
+				callBack : callBack
+			});
+			
+		   return false;
+			
+			});
+	
+	};
+	
+	
+	
+	</script>
+<body>
+
+<input type="text" id="q">
+<input type="button" value=" 搜索" id="btn">
+<p id="total"></p>
+<div id="divCustomers"></div>
+<div id="page"></div>
+</body>
+</html>
