@@ -1,8 +1,8 @@
 <?php
         define('DB_HOST','localhost');
-        define('DB_USER','myblog');
-        define('DB_PWD','FZaUJUHwhnsHeoFK');
-        define('DB_NAME','myblog');
+        define('DB_USER','***');
+        define('DB_PWD','****');
+        define('DB_NAME','***');
     class CustomSession implements SessionHandlerInterface{
         private $link;//服务器链接
         private $lifetime;//存活时间
