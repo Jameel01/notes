@@ -21,8 +21,8 @@ BFC原理：
 4.BFC子元素即使是浮动元素也会参加计算<br>
 5.BFC计算高度时，浮动元素也会参与计算
 ### 创建BFC(受BFC原理2影响，BFC可以清浮动)
-1.overflow:auto/hidden
-2.float:left/right
+1.overflow:auto/hidden<br>
+2.float:left/right<br>
 3.position:absolute/fixed
 
 
