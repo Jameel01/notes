@@ -6,7 +6,8 @@
 缺点：需要处理好浮动问题，要清浮动,高度改为不固定则不能正常使用<br>
 常用清浮动方法：<br>
 1. overflow：hidden/auto(需要配合宽度) <br>
-2. .clear:after{clear:both;display:block;content:"";height:0}
+2. .clear:after{clear:both;display:block;content:"";height:0}<br>
+3. 父级同时加浮动
 #### position:absolute
 优点：布局快<br>
 缺点：对页面整体影响大,高度改为不固定则不能正常使用<br>
