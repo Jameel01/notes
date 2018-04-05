@@ -57,7 +57,7 @@ element.addEventListener("click",function(){},false)（最后一个参数false�
     </script>
 </body>
 ```
-触发顺序：
+触发顺序：<br>
 window captrue <br>
 document captrue<br>
 html captrue<br>
