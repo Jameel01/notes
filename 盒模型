@@ -1,0 +1,28 @@
+# 盒模型
+## 标准盒模型+IE盒模型
+盒模型：content+padding+border+margin
+## 标准盒模型和IE盒模型区别
+标准width/height计算只包括content<br>
+IE的width/height计算包括content+padding+border
+## 设置盒模型
+标准：box-sizing:content-box;<br>
+IE：box-sizing:border-box;
+## js取得盒模型的宽高
+1.dom.style.width/height（只适合内联元素的宽高）<br>
+2.dom.currentStyle.width/height（获取渲染后的宽高，仅IE）<br>
+3.window.getComputedStyle(dom).width/height（兼容性比2的更好）<br>
+4.dom.getBoundingClientRect.width/height（计算绝对位置，获得四个元素top/left/width/height）
+## 盒模型边距重叠问题（重叠原则是取最大值）
+### 解决方法：BFC（块级元素格式化上下文）
+BFC原理：
+1.BFC元素垂直方向会有外边距重叠<br>
+2.BFC不与浮动元素重叠（清浮动重要原理）<br>
+3.BFC是独立容器，不影响其他元素也不受其他元素影响<br>
+4.BFC子元素即使是浮动元素也会参加计算<br>
+5.BFC计算高度时，浮动元素也会参与计算
+### 创建BFC(受BFC原理2影响，BFC可以清浮动)
+1.overflow:auto/hidden
+2.float:left/right
+3.position:absolute/fixed
+
+
