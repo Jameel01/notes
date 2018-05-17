@@ -9,3 +9,7 @@
 ```html
 <base href="http://localhost:8080/../)">
 ```
+### 去除img默认上下间距
+```css
+img{vertical-align:top}
+```
